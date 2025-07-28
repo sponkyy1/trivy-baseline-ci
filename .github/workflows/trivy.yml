@@ -1,28 +1,34 @@
-name: Trivy Baseline Diff with Git
+name: Trivy CI with Baseline Diff
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
 
 jobs:
   trivy-scan:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code (with full history)
+      - name: Checkout repo (with history)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install Trivy
+      - name: Install Trivy (0.50.2 with --diff support)
         run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+          curl -L https://github.com/aquasecurity/trivy/releases/download/v0.50.2/trivy_0.50.2_Linux-64bit.tar.gz | tar zx
+          sudo mv trivy /usr/local/bin/
 
       - name: Build Docker image
-        run: docker build -t myapp:latest .
+        run: docker build -t myapp:ci-${{ github.run_id }} .
+
+      - name: Run Trivy scan
+        run: |
+          trivy image --format json -o trivy-results.json myapp:ci-${{ github.run_id }}
 
       - name: Check if baseline exists
-        id: check
+        id: check_baseline
         run: |
           if [ -f .trivy/baseline.json ]; then
             echo "baseline_exists=true" >> $GITHUB_OUTPUT
@@ -30,22 +36,17 @@ jobs:
             echo "baseline_exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run Trivy scan
-        run: |
-          trivy image --format json -o trivy-results.json myapp:latest
-
       - name: Run Trivy diff (if baseline exists)
-        if: steps.check.outputs.baseline_exists == 'true'
-        continue-on-error: true
+        if: steps.check_baseline.outputs.baseline_exists == 'true'
         run: |
-          trivy image --ignore-unfixed --format json --diff .trivy/baseline.json -o diff-results.json myapp:latest
+          trivy image --ignore-unfixed --format json --diff .trivy/baseline.json -o diff-results.json myapp:ci-${{ github.run_id }}
 
       - name: Update baseline in repo
         run: |
           mkdir -p .trivy
-          cp trivy-results.json .trivy/baseline.json
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+          git pull origin main
           git add .trivy/baseline.json
           git commit -m "Update baseline" || echo "No changes"
-          git push
+          git push origin main

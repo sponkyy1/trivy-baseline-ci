@@ -1,4 +1,4 @@
-name: Trivy CI with Baseline Diff (Go Build)
+name: Trivy CI with manual baseline diff (jq)
 
 on:
   push:
@@ -10,27 +10,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code (with history)
+      - name: Checkout repo (with history)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install Go and Trivy from dev branch (with --diff)
+      - name: Install Trivy
         run: |
-          sudo apt update
-          sudo apt install -y git golang
-          git clone https://github.com/aquasecurity/trivy.git
-          cd trivy
-          go install ./cmd/trivy
-          sudo mv ~/go/bin/trivy /usr/local/bin/
-          trivy --version
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
 
       - name: Build Docker image
         run: docker build -t myapp:ci-${{ github.run_id }} .
 
-      - name: Run Trivy scan and save current results
-        run: |
-          trivy image --format json -o trivy-results.json myapp:ci-${{ github.run_id }}
+      - name: Run Trivy scan
+        run: trivy image --format json -o trivy-results.json myapp:ci-${{ github.run_id }}
 
       - name: Check if baseline exists
         id: check_baseline
@@ -41,11 +34,25 @@ jobs:
             echo "baseline_exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run Trivy diff (only if baseline exists)
+      - name: Compare vulnerabilities with baseline (detailed diff)
         if: steps.check_baseline.outputs.baseline_exists == 'true'
-        continue-on-error: true
         run: |
-          trivy image --ignore-unfixed --format json --diff .trivy/baseline.json -o diff-results.json myapp:ci-${{ github.run_id }}
+          jq -r '.Results[].Vulnerabilities[]? | [.VulnerabilityID, .PkgName, .InstalledVersion, .Severity, .Title] | @tsv' trivy-results.json | sort > current.tsv
+          jq -r '.Results[].Vulnerabilities[]? | .VulnerabilityID' .trivy/baseline.json | sort -u > baseline_ids.txt
+
+          echo "🛡️ New vulnerabilities (not in baseline):"
+          echo ""
+
+          while IFS=$'\t' read -r cve pkg ver sev title; do
+            if ! grep -q "$cve" baseline_ids.txt; then
+              echo "🆕 $cve"
+              echo "  Package: $pkg"
+              echo "  Version: $ver"
+              echo "  Severity: $sev"
+              echo "  Title: $title"
+              echo ""
+            fi
+          done < current.tsv
 
       - name: Update baseline in repo
         run: |

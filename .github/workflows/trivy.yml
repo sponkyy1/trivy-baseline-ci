@@ -87,7 +87,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git pull origin main
-          git add .trivy/baseline.json docs/index.html docs/diff.md
+          git add .
           if git diff --cached --quiet; then
             echo "No changes – skipping commit."
           else

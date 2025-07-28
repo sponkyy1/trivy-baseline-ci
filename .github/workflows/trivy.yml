@@ -1,0 +1,42 @@
+name: Trivy Scan with Baseline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  trivy-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker (optional)
+        run: |
+          docker build -t myapp:latest .
+
+      - name: Download Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: image
+          image-ref: myapp:latest
+          format: json
+          output: trivy-results.json
+
+      - name: Download baseline (if exists)
+        continue-on-error: true
+        uses: actions/download-artifact@v3
+        with:
+          name: trivy-baseline
+
+      - name: Run Trivy diff
+        if: ${{ steps.download-baseline.outcome == 'success' }}
+        run: |
+          trivy image --ignore-unfixed --format json --diff trivy-baseline/baseline.json -o diff-results.json myapp:latest
+
+      - name: Save current scan as new baseline
+        uses: actions/upload-artifact@v3
+        with:
+          name: trivy-baseline
+          path: trivy-results.json

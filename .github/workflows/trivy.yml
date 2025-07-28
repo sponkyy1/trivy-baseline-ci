@@ -1,4 +1,4 @@
-name: Trivy CI with manual baseline diff and GitHub Pages (/docs)
+name: Trivy CI with HTML diff report to GitHub Pages
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo (with history)
+      - name: Checkout repository (with history)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -34,66 +34,49 @@ jobs:
             echo "baseline_exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Compare vulnerabilities with baseline (detailed diff)
-        if: steps.check_baseline.outputs.baseline_exists == 'true'
-        run: |
-          jq -r '.Results[].Vulnerabilities[]? | [.VulnerabilityID, .PkgName, .InstalledVersion, .Severity, .Title] | @tsv' trivy-results.json | sort > current.tsv
-          jq -r '.Results[].Vulnerabilities[]? | .VulnerabilityID' .trivy/baseline.json | sort -u > baseline_ids.txt
-
-          echo "🛡️ New vulnerabilities (not in baseline):"
-          echo ""
-
-          while IFS=$'\t' read -r cve pkg ver sev title; do
-            if ! grep -q "$cve" baseline_ids.txt; then
-              echo "🆕 $cve"
-              echo "  Package: $pkg"
-              echo "  Version: $ver"
-              echo "  Severity: $sev"
-              echo "  Title: $title"
-              echo ""
-            fi
-          done < current.tsv
-
-      - name: Generate diff markdown report
+      - name: Generate HTML report with summary and new CVEs
         if: steps.check_baseline.outputs.baseline_exists == 'true'
         run: |
           mkdir -p docs
-          echo "## 🆕 New Vulnerabilities Compared to Baseline" > docs/diff.md
-          echo "" >> docs/diff.md
-          echo "| CVE ID | Package | Version | Severity | Title |" >> docs/diff.md
-          echo "|--------|---------|---------|----------|-------|" >> docs/diff.md
 
           jq -r '.Results[].Vulnerabilities[]? | [.VulnerabilityID, .PkgName, .InstalledVersion, .Severity, .Title] | @tsv' trivy-results.json | sort > current.tsv
           jq -r '.Results[].Vulnerabilities[]?.VulnerabilityID' .trivy/baseline.json | sort -u > baseline_ids.txt
 
+          echo "<!DOCTYPE html>" > docs/index.html
+          echo "<html><head><meta charset='UTF-8'><title>Trivy Diff Report</title></head><body>" >> docs/index.html
+
+          count=0
           while IFS=$'\t' read -r cve pkg ver sev title; do
             if ! grep -q "$cve" baseline_ids.txt; then
-              echo "| $cve | $pkg | $ver | $sev | $title |" >> docs/diff.md
+              echo "$cve	$pkg	$ver	$sev	$title" >> new.tsv
+              count=$((count+1))
             fi
           done < current.tsv
 
-      - name: Debug Show unique current vs baseline CVEs
+          if [ "$count" -eq 0 ]; then
+            echo "<h2 style='color:green;'>✅ No new vulnerabilities</h2>" >> docs/index.html
+          else
+            echo "<h2 style='color:red;'>❗ $count new vulnerabilities detected</h2>" >> docs/index.html
+            echo "<table border='1' cellpadding='6' cellspacing='0'>" >> docs/index.html
+            echo "<thead><tr><th>CVE ID</th><th>Package</th><th>Version</th><th>Severity</th><th>Title</th></tr></thead><tbody>" >> docs/index.html
+
+            while IFS=$'\t' read -r cve pkg ver sev title; do
+              echo "<tr><td>$cve</td><td>$pkg</td><td>$ver</td><td>$sev</td><td>$title</td></tr>" >> docs/index.html
+            done < new.tsv
+
+            echo "</tbody></table>" >> docs/index.html
+          fi
+
+          echo "<hr><p>Generated on $(date)</p>" >> docs/index.html
+          echo "</body></html>" >> docs/index.html
+
+      - name: Generate default HTML if no baseline exists
+        if: steps.check_baseline.outputs.baseline_exists == 'false'
         run: |
-          jq -r '.Results[].Vulnerabilities[]?.VulnerabilityID' trivy-results.json | sort -u > current.txt
-          jq -r '.Results[].Vulnerabilities[]?.VulnerabilityID' .trivy/baseline.json | sort -u > baseline.txt
-
-          echo "🧪 Current CVEs:"
-          cat current.txt
-
-          echo "🧪 Baseline CVEs:"
-          cat baseline.txt
-
-          echo "🆕 New CVEs:"
-          comm -23 current.txt baseline.txt || echo "None"
-
-
-      - name: Install Pandoc
-        run: sudo apt update && sudo apt install -y pandoc
-
-      - name: Convert Markdown to HTML for GitHub Pages
-        run: |
-          pandoc docs/diff.md -o docs/index.html
-          echo "✅ HTML generated at docs/index.html"
+          mkdir -p docs
+          echo "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Trivy Diff Report</title></head><body>" > docs/index.html
+          echo "<h2 style='color:orange;'>⚠️ No baseline found — created first baseline run.</h2>" >> docs/index.html
+          echo "<hr><p>Generated on $(date)</p></body></html>" >> docs/index.html
 
       - name: Update baseline in repo and commit docs/
         run: |

@@ -12,31 +12,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker
+      - name: Build Docker image
         run: docker build -t myapp:latest .
 
-      - name: Run Trivy and generate scan result
+      - name: Run Trivy scan
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: image
           image-ref: myapp:latest
           format: json
-          output: trivy-results.json
+          output: baseline.json
 
-      - name: Download baseline (if exists)
-        id: download-baseline
+      - name: Download previous baseline (if exists)
+        id: download
         continue-on-error: true
         uses: actions/download-artifact@v4
         with:
           name: trivy-baseline
 
-      - name: Diff scan if baseline exists
-        if: steps.download-baseline.outcome == 'success'
+      - name: Show downloaded files
+        if: steps.download.outcome == 'success'
+        run: ls -la trivy-baseline
+
+      - name: Run Trivy diff (if baseline exists)
+        if: steps.download.outcome == 'success'
         run: |
           trivy image --ignore-unfixed --format json --diff trivy-baseline/baseline.json -o diff-results.json myapp:latest
 
-      - name: Save current scan as baseline
+      - name: Upload new baseline
         uses: actions/upload-artifact@v4
         with:
           name: trivy-baseline
-          path: trivy-results.json
+          path: baseline.json

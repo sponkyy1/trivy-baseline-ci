@@ -1,44 +1,46 @@
-name: Trivy CI with Git-based Baseline
+name: Trivy Scan with Baseline
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
 
 jobs:
   trivy-scan:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code (including baseline)
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Build Docker image
         run: docker build -t myapp:latest .
 
+      - name: Install Trivy
+        run: |
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+
       - name: Run Trivy scan
-        run: trivy image --format json -o trivy-results.json myapp:latest
-
-      - name: Check if baseline exists
-        id: check_baseline
         run: |
-          if [ -f .trivy/baseline.json ]; then
-            echo "baseline_exists=true" >> $GITHUB_OUTPUT
-          else
-            echo "baseline_exists=false" >> $GITHUB_OUTPUT
-          fi
+          trivy image --format json -o trivy-results.json myapp:latest
 
-      - name: Run Trivy diff
-        if: steps.check_baseline.outputs.baseline_exists == 'true'
-        run: |
-          trivy image --ignore-unfixed --format json --diff .trivy/baseline.json -o diff-results.json myapp:latest
+      - name: Download previous baseline (if exists)
+        id: download
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: trivy-baseline
 
-      - name: Update baseline and commit
+      - name: Show downloaded files
+        if: steps.download.outcome == 'success'
+        run: ls -la trivy-baseline
+
+      - name: Run Trivy diff (if baseline exists)
+        if: steps.download.outcome == 'success'
         run: |
-          mkdir -p .trivy
-          cp trivy-results.json .trivy/baseline.json
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add .trivy/baseline.json
-          git commit -m "Update baseline" || echo "No changes to commit"
-          git push
+          trivy image --ignore-unfixed --format json --diff trivy-baseline/baseline.json -o diff-results.json myapp:latest
+
+      - name: Upload new baseline
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-baseline
+          path: baseline.json

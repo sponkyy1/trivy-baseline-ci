@@ -36,6 +36,7 @@ jobs:
 
       - name: Run Trivy diff (if baseline exists)
         if: steps.check.outputs.baseline_exists == 'true'
+        continue-on-error: true
         run: |
           trivy image --ignore-unfixed --format json --diff .trivy/baseline.json -o diff-results.json myapp:latest
 

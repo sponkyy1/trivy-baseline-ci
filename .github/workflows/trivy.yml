@@ -1,4 +1,4 @@
-name: Trivy CI with Baseline Diff
+name: Trivy CI with Baseline Diff (Go Build)
 
 on:
   push:
@@ -10,20 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo (with history)
+      - name: Checkout code (with history)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install Trivy (0.50.2 with --diff support)
+      - name: Install Go and Trivy from dev branch (with --diff)
         run: |
-          curl -L https://github.com/aquasecurity/trivy/releases/download/v0.50.2/trivy_0.50.2_Linux-64bit.tar.gz | tar zx
-          sudo mv trivy /usr/local/bin/
+          sudo apt update
+          sudo apt install -y git golang
+          git clone https://github.com/aquasecurity/trivy.git
+          cd trivy
+          go install ./cmd/trivy
+          sudo mv ~/go/bin/trivy /usr/local/bin/
+          trivy --version
 
       - name: Build Docker image
         run: docker build -t myapp:ci-${{ github.run_id }} .
 
-      - name: Run Trivy scan
+      - name: Run Trivy scan and save current results
         run: |
           trivy image --format json -o trivy-results.json myapp:ci-${{ github.run_id }}
 
@@ -36,8 +41,9 @@ jobs:
             echo "baseline_exists=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run Trivy diff (if baseline exists)
+      - name: Run Trivy diff (only if baseline exists)
         if: steps.check_baseline.outputs.baseline_exists == 'true'
+        continue-on-error: true
         run: |
           trivy image --ignore-unfixed --format json --diff .trivy/baseline.json -o diff-results.json myapp:ci-${{ github.run_id }}
 

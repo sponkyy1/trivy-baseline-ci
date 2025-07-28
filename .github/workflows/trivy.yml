@@ -57,9 +57,14 @@ jobs:
       - name: Update baseline in repo
         run: |
           mkdir -p .trivy
+          cp trivy-results.json .trivy/baseline.json
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git pull origin main
           git add .trivy/baseline.json
-          git commit -m "Update baseline" || echo "No changes"
-          git push origin main
+          if git diff --cached --quiet; then
+            echo "No baseline changes – skipping commit."
+          else
+            git commit -m "Update Trivy baseline"
+            git push origin main
+          fi

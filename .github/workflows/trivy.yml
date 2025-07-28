@@ -72,7 +72,7 @@ jobs:
             fi
           done < current.tsv
 
-      - name: Debug: Show unique current vs baseline CVEs
+      - name: Debug Show unique current vs baseline CVEs
         run: |
           jq -r '.Results[].Vulnerabilities[]?.VulnerabilityID' trivy-results.json | sort -u > current.txt
           jq -r '.Results[].Vulnerabilities[]?.VulnerabilityID' .trivy/baseline.json | sort -u > baseline.txt

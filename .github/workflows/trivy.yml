@@ -72,6 +72,21 @@ jobs:
             fi
           done < current.tsv
 
+      - name: Debug: Show unique current vs baseline CVEs
+        run: |
+          jq -r '.Results[].Vulnerabilities[]?.VulnerabilityID' trivy-results.json | sort -u > current.txt
+          jq -r '.Results[].Vulnerabilities[]?.VulnerabilityID' .trivy/baseline.json | sort -u > baseline.txt
+
+          echo "🧪 Current CVEs:"
+          cat current.txt
+
+          echo "🧪 Baseline CVEs:"
+          cat baseline.txt
+
+          echo "🆕 New CVEs:"
+          comm -23 current.txt baseline.txt || echo "None"
+
+
       - name: Install Pandoc
         run: sudo apt update && sudo apt install -y pandoc
 

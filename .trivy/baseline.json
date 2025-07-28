@@ -1,30 +1,32 @@
 {
   "SchemaVersion": 2,
-  "CreatedAt": "2025-07-28T19:38:44.451571823Z",
-  "ArtifactName": "myapp:ci-16578580947",
+  "CreatedAt": "2025-07-28T19:47:52.430851568Z",
+  "ArtifactName": "myapp:ci-16578761985",
   "ArtifactType": "container_image",
   "Metadata": {
-    "Size": 207172608,
+    "Size": 208395776,
     "OS": {
       "Family": "debian",
       "Name": "12.11"
     },
-    "ImageID": "sha256:c3c9299f2e362109a8163bebec05eca3407e7ba5f341abed48fca4fd0f79fc12",
+    "ImageID": "sha256:4d6db81ad01458e86e6d1a21395903b3baa7ced1a8eb4e04af07544a83f2649e",
     "DiffIDs": [
       "sha256:ace34d1d784c01e3f9d156687089e8f58f786e23ccd097bdbbf337d6d28b3783",
       "sha256:206f13f5e3179e2addf8227aeed4c85cb94d95776d4cc2540f9e19c41914c43c",
       "sha256:cd1cd7c2e57b8121f760e24ee1943adf4b9dea43ce5940b71f80ffdeace35f0e",
       "sha256:9b95ddc8a1403d1f6fc68bd1ea2daa65a247c2a922a985dfce6aec5574be803a",
       "sha256:e1e93a4fa4fdd7848ab14c10ec7ccf2f6e14d5fedb6b80edce58dad4de95a900",
-      "sha256:f919c4aa2a3953f311ee5fcb1dcc2827eb743f67c1a1ddce43eafe01ecf402b8",
-      "sha256:80e41ed025de5b22a54b1eceac6d566e432de1f8781f5f36d53d206f3efcd942"
+      "sha256:c23bee2c920e23df4d681e762485d9b8e783bbc363f575693189edf111931b1b",
+      "sha256:c8a4bce7fc224c1f14d07958303dbb453046c8817f2e11bff2368789476d56e3",
+      "sha256:9a3e67d87acfd67ad490aa86f1c921f9af7ac4b00c30cccd90918beffc0c2869",
+      "sha256:c8c22ed6f5f854a6b92e4187a044ac1635cf2baaea4f32007d324f1000f10aa9"
     ],
     "RepoTags": [
-      "myapp:ci-16578580947"
+      "myapp:ci-16578761985"
     ],
     "ImageConfig": {
       "architecture": "amd64",
-      "created": "2025-07-28T19:38:29.559563867Z",
+      "created": "2025-07-28T19:47:44.080322406Z",
       "history": [
         {
           "created": "2025-03-27T14:23:08Z",
@@ -76,17 +78,27 @@
           "empty_layer": true
         },
         {
-          "created": "2025-07-28T19:38:29Z",
+          "created": "2025-07-28T19:47:44Z",
+          "created_by": "RUN /bin/sh -c apt-get update \u0026\u0026 apt-get install -y --no-install-recommends     ca-certificates  \u0026\u0026 rm -rf /var/lib/apt/lists/* # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-28T19:47:44Z",
           "created_by": "WORKDIR /app",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2025-07-28T19:38:29Z",
+          "created": "2025-07-28T19:47:44Z",
+          "created_by": "COPY package*.json ./ # buildkit",
+          "comment": "buildkit.dockerfile.v0"
+        },
+        {
+          "created": "2025-07-28T19:47:44Z",
           "created_by": "COPY . . # buildkit",
           "comment": "buildkit.dockerfile.v0"
         },
         {
-          "created": "2025-07-28T19:38:29Z",
+          "created": "2025-07-28T19:47:44Z",
           "created_by": "CMD [\"node\" \"index.js\"]",
           "comment": "buildkit.dockerfile.v0",
           "empty_layer": true
@@ -101,8 +113,10 @@
           "sha256:cd1cd7c2e57b8121f760e24ee1943adf4b9dea43ce5940b71f80ffdeace35f0e",
           "sha256:9b95ddc8a1403d1f6fc68bd1ea2daa65a247c2a922a985dfce6aec5574be803a",
           "sha256:e1e93a4fa4fdd7848ab14c10ec7ccf2f6e14d5fedb6b80edce58dad4de95a900",
-          "sha256:f919c4aa2a3953f311ee5fcb1dcc2827eb743f67c1a1ddce43eafe01ecf402b8",
-          "sha256:80e41ed025de5b22a54b1eceac6d566e432de1f8781f5f36d53d206f3efcd942"
+          "sha256:c23bee2c920e23df4d681e762485d9b8e783bbc363f575693189edf111931b1b",
+          "sha256:c8a4bce7fc224c1f14d07958303dbb453046c8817f2e11bff2368789476d56e3",
+          "sha256:9a3e67d87acfd67ad490aa86f1c921f9af7ac4b00c30cccd90918beffc0c2869",
+          "sha256:c8c22ed6f5f854a6b92e4187a044ac1635cf2baaea4f32007d324f1000f10aa9"
         ]
       },
       "config": {
@@ -144,18 +158,26 @@
         "DiffID": "sha256:e1e93a4fa4fdd7848ab14c10ec7ccf2f6e14d5fedb6b80edce58dad4de95a900"
       },
       {
-        "Size": 1536,
-        "DiffID": "sha256:f919c4aa2a3953f311ee5fcb1dcc2827eb743f67c1a1ddce43eafe01ecf402b8"
+        "Size": 9632256,
+        "DiffID": "sha256:c23bee2c920e23df4d681e762485d9b8e783bbc363f575693189edf111931b1b"
       },
       {
-        "Size": 9780736,
-        "DiffID": "sha256:80e41ed025de5b22a54b1eceac6d566e432de1f8781f5f36d53d206f3efcd942"
+        "Size": 1536,
+        "DiffID": "sha256:c8a4bce7fc224c1f14d07958303dbb453046c8817f2e11bff2368789476d56e3"
+      },
+      {
+        "Size": 2560,
+        "DiffID": "sha256:9a3e67d87acfd67ad490aa86f1c921f9af7ac4b00c30cccd90918beffc0c2869"
+      },
+      {
+        "Size": 1369088,
+        "DiffID": "sha256:c8c22ed6f5f854a6b92e4187a044ac1635cf2baaea4f32007d324f1000f10aa9"
       }
     ]
   },
   "Results": [
     {
-      "Target": "myapp:ci-16578580947 (debian 12.11)",
+      "Target": "myapp:ci-16578761985 (debian 12.11)",
       "Class": "os-pkgs",
       "Type": "debian",
       "Vulnerabilities": [
@@ -3161,6 +3183,44 @@
           "LastModifiedDate": "2025-06-09T16:15:33.237Z"
         },
         {
+          "VulnerabilityID": "CVE-2025-27587",
+          "PkgID": "libssl3@3.0.16-1~deb12u1",
+          "PkgName": "libssl3",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/libssl3@3.0.16-1~deb12u1?arch=amd64\u0026distro=debian-12.11",
+            "UID": "3aac4cd80cbe088a"
+          },
+          "InstalledVersion": "3.0.16-1~deb12u1",
+          "Status": "affected",
+          "Layer": {
+            "DiffID": "sha256:c23bee2c920e23df4d681e762485d9b8e783bbc363f575693189edf111931b1b"
+          },
+          "SeveritySource": "debian",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-27587",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Title": "OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable  ...",
+          "Description": "OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable to a Minerva attack, exploitable by measuring the time of signing of random messages using the EVP_DigestSign API, and then using the private key to extract the K value (nonce) from the signatures. Next, based on the bit size of the extracted nonce, one can compare the signing time of full-sized nonces to signatures that used smaller nonces, via statistical tests. There is a side-channel in the P-364 curve that allows private key extraction (also, there is a dependency between the bit size of K and the size of the side channel). NOTE: This CVE is disputed because the OpenSSL security policy explicitly notes that any side channels which require same physical system to be detected are outside of the threat model for the software. The timing signal is so small that it is infeasible to be detected without having the attacking process running on the same physical system.",
+          "Severity": "LOW",
+          "CweIDs": [
+            "CWE-385"
+          ],
+          "VendorSeverity": {
+            "debian": 1,
+            "ubuntu": 1
+          },
+          "References": [
+            "https://github.com/openssl/openssl/issues/24253",
+            "https://minerva.crocs.fi.muni.cz",
+            "https://www.cve.org/CVERecord?id=CVE-2025-27587"
+          ],
+          "PublishedDate": "2025-06-16T22:15:44.093Z",
+          "LastModifiedDate": "2025-06-26T17:15:30.497Z"
+        },
+        {
           "VulnerabilityID": "CVE-2022-27943",
           "PkgID": "libstdc++6@12.2.0-14+deb12u1",
           "PkgName": "libstdc++6",
@@ -4275,6 +4335,44 @@
           ],
           "PublishedDate": "2025-06-16T22:16:41.527Z",
           "LastModifiedDate": "2025-06-17T20:50:23.507Z"
+        },
+        {
+          "VulnerabilityID": "CVE-2025-27587",
+          "PkgID": "openssl@3.0.16-1~deb12u1",
+          "PkgName": "openssl",
+          "PkgIdentifier": {
+            "PURL": "pkg:deb/debian/openssl@3.0.16-1~deb12u1?arch=amd64\u0026distro=debian-12.11",
+            "UID": "acc4f3bf56ffa962"
+          },
+          "InstalledVersion": "3.0.16-1~deb12u1",
+          "Status": "affected",
+          "Layer": {
+            "DiffID": "sha256:c23bee2c920e23df4d681e762485d9b8e783bbc363f575693189edf111931b1b"
+          },
+          "SeveritySource": "debian",
+          "PrimaryURL": "https://avd.aquasec.com/nvd/cve-2025-27587",
+          "DataSource": {
+            "ID": "debian",
+            "Name": "Debian Security Tracker",
+            "URL": "https://salsa.debian.org/security-tracker-team/security-tracker"
+          },
+          "Title": "OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable  ...",
+          "Description": "OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable to a Minerva attack, exploitable by measuring the time of signing of random messages using the EVP_DigestSign API, and then using the private key to extract the K value (nonce) from the signatures. Next, based on the bit size of the extracted nonce, one can compare the signing time of full-sized nonces to signatures that used smaller nonces, via statistical tests. There is a side-channel in the P-364 curve that allows private key extraction (also, there is a dependency between the bit size of K and the size of the side channel). NOTE: This CVE is disputed because the OpenSSL security policy explicitly notes that any side channels which require same physical system to be detected are outside of the threat model for the software. The timing signal is so small that it is infeasible to be detected without having the attacking process running on the same physical system.",
+          "Severity": "LOW",
+          "CweIDs": [
+            "CWE-385"
+          ],
+          "VendorSeverity": {
+            "debian": 1,
+            "ubuntu": 1
+          },
+          "References": [
+            "https://github.com/openssl/openssl/issues/24253",
+            "https://minerva.crocs.fi.muni.cz",
+            "https://www.cve.org/CVERecord?id=CVE-2025-27587"
+          ],
+          "PublishedDate": "2025-06-16T22:15:44.093Z",
+          "LastModifiedDate": "2025-06-26T17:15:30.497Z"
         },
         {
           "VulnerabilityID": "CVE-2007-5686",

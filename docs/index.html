@@ -1,85 +1,19 @@
 <!DOCTYPE html>
 <html><head><meta charset='UTF-8'><title>Trivy Diff Report</title></head><body>
-<h2 style='color:red;'>❗ 77 new vulnerabilities detected</h2>
+<h2 style='color:red;'>❗ 2 new vulnerabilities detected</h2>
+<h3>🔢 Vulnerability Metrics</h3>
+<ul>
+<li>Baseline CVEs: 50</li>
+<li>Current CVEs: 92</li>
+<li>New CVEs: 2</li>
+<li>Resolved CVEs: -40</li>
+<li>Δ Change: 42 (84.0%)</li>
+</ul>
+<h3>🆕 New CVEs</h3>
 <table border='1' cellpadding='6' cellspacing='0'>
 <thead><tr><th>CVE ID</th><th>Package</th><th>Version</th><th>Severity</th><th>Title</th></tr></thead><tbody>
-<tr><td>CVE-2005-2541</td><td>tar</td><td>1.34+dfsg-1.2+deb12u1</td><td>LOW</td><td>tar: does not properly warn the user when extracting setuid or setgid files</td></tr>
-<tr><td>CVE-2007-5686</td><td>login</td><td>1:4.13+dfsg1-1+deb12u1</td><td>LOW</td><td>initscripts in rPath Linux 1 sets insecure permissions for the /var/lo ...</td></tr>
-<tr><td>CVE-2007-5686</td><td>passwd</td><td>1:4.13+dfsg1-1+deb12u1</td><td>LOW</td><td>initscripts in rPath Linux 1 sets insecure permissions for the /var/lo ...</td></tr>
-<tr><td>CVE-2010-4756</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: glob implementation can cause excessive CPU and memory consumption due to crafted glob expressions</td></tr>
-<tr><td>CVE-2010-4756</td><td>libc6</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: glob implementation can cause excessive CPU and memory consumption due to crafted glob expressions</td></tr>
-<tr><td>CVE-2011-3374</td><td>apt</td><td>2.6.1</td><td>LOW</td><td>It was found that apt-key in apt, all versions, do not correctly valid ...</td></tr>
-<tr><td>CVE-2011-3374</td><td>libapt-pkg6.0</td><td>2.6.1</td><td>LOW</td><td>It was found that apt-key in apt, all versions, do not correctly valid ...</td></tr>
-<tr><td>CVE-2011-3389</td><td>libgnutls30</td><td>3.7.9-2+deb12u4</td><td>LOW</td><td>HTTPS: block-wise chosen-plaintext attack against SSL/TLS (BEAST)</td></tr>
-<tr><td>CVE-2011-4116</td><td>perl-base</td><td>5.36.0-7+deb12u2</td><td>LOW</td><td>perl: File:: Temp insecure temporary file handling</td></tr>
-<tr><td>CVE-2013-4392</td><td>libsystemd0</td><td>252.36-1~deb12u1</td><td>LOW</td><td>systemd: TOCTOU race condition when updating file permissions and SELinux security contexts</td></tr>
-<tr><td>CVE-2013-4392</td><td>libudev1</td><td>252.36-1~deb12u1</td><td>LOW</td><td>systemd: TOCTOU race condition when updating file permissions and SELinux security contexts</td></tr>
-<tr><td>CVE-2017-18018</td><td>coreutils</td><td>9.1-1</td><td>LOW</td><td>coreutils: race condition vulnerability in chown and chgrp</td></tr>
-<tr><td>CVE-2018-20796</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c</td></tr>
-<tr><td>CVE-2018-20796</td><td>libc6</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c</td></tr>
-<tr><td>CVE-2018-6829</td><td>libgcrypt20</td><td>1.10.1-3</td><td>LOW</td><td>libgcrypt: ElGamal implementation doesn't have semantic security due to incorrectly encoded plaintexts possibly allowing to obtain sensitive information</td></tr>
-<tr><td>CVE-2019-1010022</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: stack guard protection bypass</td></tr>
-<tr><td>CVE-2019-1010022</td><td>libc6</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: stack guard protection bypass</td></tr>
-<tr><td>CVE-2019-1010023</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: running ldd on malicious ELF leads to code execution because of wrong size computation</td></tr>
-<tr><td>CVE-2019-1010023</td><td>libc6</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: running ldd on malicious ELF leads to code execution because of wrong size computation</td></tr>
-<tr><td>CVE-2019-1010024</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: ASLR bypass using cache of thread stack and heap</td></tr>
-<tr><td>CVE-2019-1010024</td><td>libc6</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: ASLR bypass using cache of thread stack and heap</td></tr>
-<tr><td>CVE-2019-1010025</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: information disclosure of heap addresses of pthread_created thread</td></tr>
-<tr><td>CVE-2019-1010025</td><td>libc6</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: information disclosure of heap addresses of pthread_created thread</td></tr>
-<tr><td>CVE-2019-9192</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c</td></tr>
-<tr><td>CVE-2019-9192</td><td>libc6</td><td>2.36-9+deb12u10</td><td>LOW</td><td>glibc: uncontrolled recursion in function check_dst_limits_calc_pos_1 in posix/regexec.c</td></tr>
-<tr><td>CVE-2022-0563</td><td>bsdutils</td><td>1:2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-0563</td><td>libblkid1</td><td>2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-0563</td><td>libmount1</td><td>2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-0563</td><td>libsmartcols1</td><td>2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-0563</td><td>libuuid1</td><td>2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-0563</td><td>mount</td><td>2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-0563</td><td>util-linux</td><td>2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-0563</td><td>util-linux-extra</td><td>2.38.1-5+deb12u3</td><td>LOW</td><td>util-linux: partial disclosure of arbitrary files in chfn and chsh when compiled with libreadline</td></tr>
-<tr><td>CVE-2022-27943</td><td>gcc-12-base</td><td>12.2.0-14+deb12u1</td><td>LOW</td><td>binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows stack exhaustion in demangle_const</td></tr>
-<tr><td>CVE-2022-27943</td><td>libgcc-s1</td><td>12.2.0-14+deb12u1</td><td>LOW</td><td>binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows stack exhaustion in demangle_const</td></tr>
-<tr><td>CVE-2022-27943</td><td>libstdc++6</td><td>12.2.0-14+deb12u1</td><td>LOW</td><td>binutils: libiberty/rust-demangle.c in GNU GCC 11.2 allows stack exhaustion in demangle_const</td></tr>
-<tr><td>CVE-2022-3219</td><td>gpgv</td><td>2.2.40-1.1</td><td>LOW</td><td>gnupg: denial of service issue (resource consumption) using compressed packets</td></tr>
-<tr><td>CVE-2023-31437</td><td>libsystemd0</td><td>252.36-1~deb12u1</td><td>LOW</td><td>An issue was discovered in systemd 253. An attacker can modify a seale ...</td></tr>
-<tr><td>CVE-2023-31437</td><td>libudev1</td><td>252.36-1~deb12u1</td><td>LOW</td><td>An issue was discovered in systemd 253. An attacker can modify a seale ...</td></tr>
-<tr><td>CVE-2023-31438</td><td>libsystemd0</td><td>252.36-1~deb12u1</td><td>LOW</td><td>An issue was discovered in systemd 253. An attacker can truncate a sea ...</td></tr>
-<tr><td>CVE-2023-31438</td><td>libudev1</td><td>252.36-1~deb12u1</td><td>LOW</td><td>An issue was discovered in systemd 253. An attacker can truncate a sea ...</td></tr>
-<tr><td>CVE-2023-31439</td><td>libsystemd0</td><td>252.36-1~deb12u1</td><td>LOW</td><td>An issue was discovered in systemd 253. An attacker can modify the con ...</td></tr>
-<tr><td>CVE-2023-31439</td><td>libudev1</td><td>252.36-1~deb12u1</td><td>LOW</td><td>An issue was discovered in systemd 253. An attacker can modify the con ...</td></tr>
-<tr><td>CVE-2023-31486</td><td>perl-base</td><td>5.36.0-7+deb12u2</td><td>LOW</td><td>http-tiny: insecure TLS cert default</td></tr>
-<tr><td>CVE-2024-10041</td><td>libpam-modules</td><td>1.5.2-6+deb12u1</td><td>MEDIUM</td><td>pam: libpam: Libpam vulnerable to read hashed password</td></tr>
-<tr><td>CVE-2024-10041</td><td>libpam-modules-bin</td><td>1.5.2-6+deb12u1</td><td>MEDIUM</td><td>pam: libpam: Libpam vulnerable to read hashed password</td></tr>
-<tr><td>CVE-2024-10041</td><td>libpam-runtime</td><td>1.5.2-6+deb12u1</td><td>MEDIUM</td><td>pam: libpam: Libpam vulnerable to read hashed password</td></tr>
-<tr><td>CVE-2024-10041</td><td>libpam0g</td><td>1.5.2-6+deb12u1</td><td>MEDIUM</td><td>pam: libpam: Libpam vulnerable to read hashed password</td></tr>
-<tr><td>CVE-2024-56433</td><td>login</td><td>1:4.13+dfsg1-1+deb12u1</td><td>LOW</td><td>shadow-utils: Default subordinate ID configuration in /etc/login.defs could lead to compromise</td></tr>
-<tr><td>CVE-2024-56433</td><td>passwd</td><td>1:4.13+dfsg1-1+deb12u1</td><td>LOW</td><td>shadow-utils: Default subordinate ID configuration in /etc/login.defs could lead to compromise</td></tr>
-<tr><td>CVE-2025-30258</td><td>gpgv</td><td>2.2.40-1.1</td><td>LOW</td><td>gnupg: verification DoS due to a malicious subkey in the keyring</td></tr>
-<tr><td>CVE-2025-32988</td><td>libgnutls30</td><td>3.7.9-2+deb12u4</td><td>MEDIUM</td><td>gnutls: Vulnerability in GnuTLS otherName SAN export</td></tr>
-<tr><td>CVE-2025-32989</td><td>libgnutls30</td><td>3.7.9-2+deb12u4</td><td>MEDIUM</td><td>gnutls: Vulnerability in GnuTLS SCT extension parsing</td></tr>
-<tr><td>CVE-2025-32990</td><td>libgnutls30</td><td>3.7.9-2+deb12u4</td><td>MEDIUM</td><td>gnutls: Vulnerability in GnuTLS certtool template parsing</td></tr>
-<tr><td>CVE-2025-40909</td><td>perl-base</td><td>5.36.0-7+deb12u2</td><td>MEDIUM</td><td>perl: Perl threads have a working directory race condition where file operations may target unintended paths</td></tr>
-<tr><td>CVE-2025-45582</td><td>tar</td><td>1.34+dfsg-1.2+deb12u1</td><td>MEDIUM</td><td>tar: Tar path traversal</td></tr>
-<tr><td>CVE-2025-4598</td><td>libsystemd0</td><td>252.36-1~deb12u1</td><td>MEDIUM</td><td>systemd-coredump: race condition that allows a local attacker to crash a SUID program and gain read access to the resulting core dump</td></tr>
-<tr><td>CVE-2025-4598</td><td>libudev1</td><td>252.36-1~deb12u1</td><td>MEDIUM</td><td>systemd-coredump: race condition that allows a local attacker to crash a SUID program and gain read access to the resulting core dump</td></tr>
-<tr><td>CVE-2025-4802</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>HIGH</td><td>glibc: static setuid binary dlopen may incorrectly search LD_LIBRARY_PATH</td></tr>
-<tr><td>CVE-2025-4802</td><td>libc6</td><td>2.36-9+deb12u10</td><td>HIGH</td><td>glibc: static setuid binary dlopen may incorrectly search LD_LIBRARY_PATH</td></tr>
-<tr><td>CVE-2025-5278</td><td>coreutils</td><td>9.1-1</td><td>LOW</td><td>coreutils: Heap Buffer Under-Read in GNU Coreutils sort via Key Specification</td></tr>
-<tr><td>CVE-2025-6020</td><td>libpam-modules</td><td>1.5.2-6+deb12u1</td><td>HIGH</td><td>linux-pam: Linux-pam directory Traversal</td></tr>
-<tr><td>CVE-2025-6020</td><td>libpam-modules-bin</td><td>1.5.2-6+deb12u1</td><td>HIGH</td><td>linux-pam: Linux-pam directory Traversal</td></tr>
-<tr><td>CVE-2025-6020</td><td>libpam-runtime</td><td>1.5.2-6+deb12u1</td><td>HIGH</td><td>linux-pam: Linux-pam directory Traversal</td></tr>
-<tr><td>CVE-2025-6020</td><td>libpam0g</td><td>1.5.2-6+deb12u1</td><td>HIGH</td><td>linux-pam: Linux-pam directory Traversal</td></tr>
-<tr><td>CVE-2025-6141</td><td>libtinfo6</td><td>6.4-4</td><td>LOW</td><td>gnu-ncurses: ncurses Stack Buffer Overflow</td></tr>
-<tr><td>CVE-2025-6141</td><td>ncurses-base</td><td>6.4-4</td><td>LOW</td><td>gnu-ncurses: ncurses Stack Buffer Overflow</td></tr>
-<tr><td>CVE-2025-6141</td><td>ncurses-bin</td><td>6.4-4</td><td>LOW</td><td>gnu-ncurses: ncurses Stack Buffer Overflow</td></tr>
-<tr><td>CVE-2025-6297</td><td>dpkg</td><td>1.21.22</td><td>UNKNOWN</td><td>It was discovered that dpkg-deb does not properly sanitize directory p ...</td></tr>
-<tr><td>CVE-2025-6395</td><td>libgnutls30</td><td>3.7.9-2+deb12u4</td><td>MEDIUM</td><td>gnutls: NULL pointer dereference in _gnutls_figure_common_ciphersuite()</td></tr>
-<tr><td>CVE-2025-8058</td><td>libc-bin</td><td>2.36-9+deb12u10</td><td>UNKNOWN</td><td>The regcomp function in the GNU C library version from 2.4 to 2.41 is  ...</td></tr>
-<tr><td>CVE-2025-8058</td><td>libc6</td><td>2.36-9+deb12u10</td><td>UNKNOWN</td><td>The regcomp function in the GNU C library version from 2.4 to 2.41 is  ...</td></tr>
-<tr><td>TEMP-0290435-0B57B5</td><td>tar</td><td>1.34+dfsg-1.2+deb12u1</td><td>LOW</td><td>[tar's rmt command may have undesired side effects]</td></tr>
-<tr><td>TEMP-0517018-A83CE6</td><td>sysvinit-utils</td><td>3.06-4</td><td>LOW</td><td>[sysvinit: no-root option in expert installer exposes locally exploitable security flaw]</td></tr>
-<tr><td>TEMP-0628843-DBAD28</td><td>login</td><td>1:4.13+dfsg1-1+deb12u1</td><td>LOW</td><td>[more related to CVE-2005-4890]</td></tr>
-<tr><td>TEMP-0628843-DBAD28</td><td>passwd</td><td>1:4.13+dfsg1-1+deb12u1</td><td>LOW</td><td>[more related to CVE-2005-4890]</td></tr>
-<tr><td>TEMP-0841856-B18BAF</td><td>bash</td><td>5.2.15-2+b8</td><td>LOW</td><td>[Privilege escalation possible to other user than root]</td></tr>
+<tr><td>CVE-2025-27587</td><td>libssl3</td><td>3.0.16-1~deb12u1</td><td>LOW</td><td>OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable  ...</td></tr>
+<tr><td>CVE-2025-27587</td><td>openssl</td><td>3.0.16-1~deb12u1</td><td>LOW</td><td>OpenSSL 3.0.0 through 3.3.2 on the PowerPC architecture is vulnerable  ...</td></tr>
 </tbody></table>
-<hr><p>Generated on Mon Jul 28 19:38:44 UTC 2025</p>
+<hr><p>Generated on Mon Jul 28 19:47:52 UTC 2025</p>
 </body></html>
